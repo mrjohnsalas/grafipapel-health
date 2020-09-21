@@ -1,0 +1,233 @@
+/* You can add global styles to this file, and also import other style files */
+/* FONTS */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200;500&display=swap');
+
+/* VARIABLES */
+:root {
+    --color-strongBlue: #262C4A;
+    --color-blue: #0F7EEB;
+    --color-white: white;
+    --color-red: #F85174;
+    --color-strongGreen: #21486A;
+    --color-gray: #8A93BB;
+    --color-lightGray: #424B6C;
+    --color-strongGray: #3F4768;
+}
+
+/* GENERAL STYLES */
+body {
+    background-color: var(--color-strongBlue);
+    font-family: 'Montserrat', sans-serif;
+    color: var(--color-white);
+}
+
+.container {
+    max-width: 650px;
+}
+
+.btn {
+    font-weight: 900;
+    font-size: 15px;
+    border-radius: 30px;
+    padding: 10px 40px;
+    margin: 20px auto;
+}
+
+/* HEART LOGO */
+
+.heart {
+    fill: var(--color-red);
+    position: relative;
+    top: 5px;
+    width: 60px;
+    animation: pulse 1s ease infinite;
+    
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.3); }
+    100% { transform: scale(1); }
+}
+
+/* CHECK CIRCLE */
+
+.check-round {
+    position: relative;
+    height: 28px;
+    width: 28px;
+}
+
+.check-round label {
+    background-color: transparent;
+    border: 3px solid var(--color-strongGreen);
+    border-radius: 50%;
+    cursor: pointer;
+    height: 28px;
+    width: 28px;
+    left: 0;
+    top: 0;
+    position: absolute;
+}
+
+.check-round label:after {
+    border: 4px solid var(--color-white);
+    border-top: none;
+    border-right: none;
+    content: "";
+    height: 8px;
+    width: 14px;
+    left: 4px;
+    top: 6px;
+    opacity: 0;
+    position: absolute;
+    transform: rotate(-45deg);
+}
+
+.check-round input[type="checkbox"] {
+    visibility: hidden;
+}
+
+.check-round input[type="checkbox"]:checked+label {
+    background-color: var(--color-blue);
+    border-color: var(--color-blue);
+}
+
+.check-round input[type="checkbox"]:checked+label:after {
+    opacity: 1;
+}
+
+/* QUIZ-INIT */
+
+.quiz-init {
+    text-align: center;
+    color: var(--color-white);
+    font-size: 30px;
+}
+
+.quiz-init-gp {
+    margin-top: 120px;
+    margin-bottom: 10px;
+}
+
+.quiz-init-title {
+    font-size: 20px;
+    margin-top: 30px;
+    color: var(--color-gray);
+}
+
+.quiz-init-search {
+    border-radius: 20px;
+    margin: 40px auto;
+    padding: 10px;
+    width: 80%;
+    border: 2px solid var(--color-strongGreen);
+}
+
+/* QUIZ-END */
+
+.quiz-end {
+    text-align: center;
+    color: var(--color-white);
+    font-size: 30px;
+}
+.quiz-end-title {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+.quiz-end-healt {
+    font-size: 20px;
+    margin-top: 30px;
+    color: var(--color-white);
+}
+.quiz-end-healt span, a {
+    color: var(--color-red);
+    text-decoration: none;
+}
+.quiz-end-healt a:hover {
+    color: var(--color-red);
+    text-decoration: none;
+}
+.quiz-end-comment {
+    font-size: 14px;
+    margin-top: 30px;
+    color: var(--color-gray);
+}
+
+/* QUIZ-APP */
+
+.quiz-app-user {
+    margin: 20px 5px 10px;
+    text-align: right;
+    color: var(--color-gray);
+}
+
+.quiz-app-user i {
+    margin-right: 5px;
+}
+
+.quiz-app .progress {
+    border-radius: 20px;
+    height: 35px;
+    border: 3px solid var(--color-strongGray);
+    background-color: var(--color-strongBlue);
+    font-size: 15px;
+    margin: 10px 5px;
+}
+
+.quiz-app .progress-bar {
+    background: linear-gradient(90deg, rgba(250, 79, 104, 1) 0%, rgba(207, 99, 196, 1) 35%, rgba(179, 112, 251, 1) 100%);
+    border-radius: 20px;
+}
+
+.quiz-app-question-count {
+    color: var(--color-gray);
+    border-bottom: 1px solid var(--color-lightGray);
+    margin: 20px 5px 10px;
+    padding-bottom: 7px;
+}
+
+.quiz-app-question-count h1 {
+    font-weight: 900;
+    font-size: 20px;
+}
+
+.quiz-app-question-count span {
+    font-size: 14px;
+}
+
+.quiz-app-question h1 {
+    font-weight: 900;
+    font-size: 20px;
+    margin: 10px 5px;
+    height: 200px;
+}
+
+.quiz-app-controls {
+    text-align: center;
+}
+
+.quiz-app .option {
+    margin: 0 auto;
+    width: 70%;
+    border: 4px solid var(--color-strongGreen);
+    padding: 5px 25px;
+    border-radius: 20px;
+    cursor: pointer;
+    background: linear-gradient(90deg, rgba(38, 44, 74, 1) 0%, rgba(36, 47, 77, 1) 50%, rgba(36, 50, 81, 1) 100%);
+}
+
+.quiz-app .option-label {
+    background-color: transparent;
+    color: var(--color-white);
+    border: none;
+    font-weight: 400;
+    font-size: 20px;
+    cursor: inherit;
+}
+
+.quiz-app .option-group {
+    border: none;
+    background-color: transparent;
+    border-radius: 0;
+}
