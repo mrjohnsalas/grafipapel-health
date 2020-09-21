@@ -1,0 +1,83 @@
+<div class="modal-header">
+    <h4 class="modal-title">{{ this.createMode ? 'Crear' : 'Editar' }} trabajador</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<div class="modal-body">
+    <form [formGroup]="form" (ngSubmit)="save()" class=" ">
+        <div class="form-group">
+            <label for="employeeType">Tipo:</label>
+            <select class="form-control" formControlName="employeeType">
+                <option [ngValue]="1">Empleado</option>
+                <option [ngValue]="2">Obrero</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="dni">DNI:</label>
+            <input type="text" name="dni" id="dni" placeholder="DNI" class="form-control" formControlName="dni">
+            <span class="text-danger" *ngIf="(dni.dirty || dni.touched) && dni.errors">
+                <span *ngIf="dni.errors.required">{{ appSettingsService.RequiredErrorMessage }}</span>
+                <span *ngIf="dni.errors.minlength">{{ appSettingsService.MinLengthErrorMessage }} {{ dniLength }}.</span>
+                <span *ngIf="dni.errors.maxlength">{{ appSettingsService.MaxLengthErrorMessage }} {{ dniLength }}.</span>
+            </span>
+        </div>
+        <div class="form-group">
+            <label for="grafipapelId">Grafipapel Id:</label>
+            <input type="text" name="grafipapelId" id="grafipapelId" placeholder="Grafipapel Id" class="form-control" formControlName="grafipapelId">
+            <span class="text-danger" *ngIf="(grafipapelId.dirty || grafipapelId.touched) && grafipapelId.errors">
+                <span *ngIf="grafipapelId.errors.required">{{ appSettingsService.RequiredErrorMessage }}</span>
+                <span *ngIf="grafipapelId.errors.minlength">{{ appSettingsService.MinLengthErrorMessage }} {{ grafipapelIdLength }}.</span>
+                <span *ngIf="grafipapelId.errors.maxlength">{{ appSettingsService.MaxLengthErrorMessage }} {{ grafipapelIdLength }}.</span>
+            </span>
+        </div>
+        <div class="form-group">
+            <label for="firstName">Nombres:</label>
+            <input type="text" name="firstName" id="firstName" placeholder="Nombres" class="form-control" formControlName="firstName">
+            <span class="text-danger" *ngIf="(firstName.dirty || firstName.touched) && firstName.errors">
+                <span *ngIf="firstName.errors.required">{{ appSettingsService.RequiredErrorMessage }}</span>
+                <span *ngIf="firstName.errors.maxlength">{{ appSettingsService.MaxLengthErrorMessage }} {{ firstNameMaxLength }}.</span>
+            </span>
+        </div>
+        <div class="form-group">
+            <label for="lastName">Apellidos:</label>
+            <input type="text" name="lastName" id="lastName" placeholder="Apellidos" class="form-control" formControlName="lastName">
+            <span class="text-danger" *ngIf="(lastName.dirty || lastName.touched) && lastName.errors">
+                <span *ngIf="lastName.errors.required">{{ appSettingsService.RequiredErrorMessage }}</span>
+                <span *ngIf="lastName.errors.maxlength">{{ appSettingsService.MaxLengthErrorMessage }} {{ lastNameMaxLength }}.</span>
+            </span>
+        </div>
+        <div class="form-group">
+            <label for="dateOfBirth">Fec. Nacimiento:</label>
+            <input type="date" name="dateOfBirth" id="dateOfBirth" placeholder="Fec. Nacimiento" class="form-control" formControlName="dateOfBirth">
+            <span class="text-danger" *ngIf="(dateOfBirth.dirty || dateOfBirth.touched) && dateOfBirth.errors">
+                <span *ngIf="dateOfBirth.errors.required">{{ appSettingsService.RequiredErrorMessage }}</span>
+            </span>
+        </div>
+        <div class="form-group">
+            <label for="address">Dirección:</label>
+            <input type="text" name="address" id="address" placeholder="Dirección" class="form-control" formControlName="address">
+            <span class="text-danger" *ngIf="(address.dirty || address.touched) && address.errors">
+                <span *ngIf="address.errors.maxlength">{{ appSettingsService.MaxLengthErrorMessage }} {{ addressMaxLength }}.</span>
+            </span>
+        </div>
+        <div class="form-group">
+            <label for="phone">Celular:</label>
+            <input type="number" name="phone" id="phone" placeholder="Celular" class="form-control" formControlName="phone">
+            <span class="text-danger" *ngIf="(phone.dirty || phone.touched) && phone.errors">
+                <span *ngIf="phone.errors.minlength">{{ appSettingsService.MinLengthErrorMessage }} {{ phoneLength }}.</span>
+                <span *ngIf="phone.errors.maxlength">{{ appSettingsService.MaxLengthErrorMessage }} {{ phoneLength }}.</span>
+            </span>
+        </div>
+        <div class="form-group">
+            <label for="canEnter">¿Puede ingresar?</label>
+            <input type="checkbox" name="canEnter" id="canEnter" class="form-control" formControlName="canEnter">
+        </div>
+    </form>
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Cancelar</button>
+    <button class="btn btn-primary" (click)="save()" [disabled]="form.invalid">Crear</button>
+</div>

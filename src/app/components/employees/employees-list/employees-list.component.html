@@ -1,0 +1,24 @@
+<button class="btn btn-primary" (click)="addEmployee()">Agregar trabajador</button>
+
+<table class="table table-striped" *ngIf="this.employees && this.employees.length > 0">
+    <thead>
+        <tr>
+            <th>Dni</th>
+            <th>Nombre completo</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let employee of this.employees, let index = index">
+            <td>{{ employee.dni }}</td>
+            <td>{{ employee.firstName + ' ' + employee.lastName }}</td>
+            <td>
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <button type="button" class="btn btn-default btn-sm" (click)="view(employee)"><i class="fa fa-file-o" aria-hidden="true"></i></button>
+                    <button type="button" class="btn btn-default btn-sm" (click)="edit(employee)"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+                    <button type="button" class="btn btn-default btn-sm" (click)="delete(employee.id, index)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                  </div>
+            </td>
+        </tr>
+    </tbody>
+</table>

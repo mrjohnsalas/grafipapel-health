@@ -28,6 +28,14 @@ export class EmployeesService {
     return this.db.collection(this.employeeCollectionName).doc(employee.id).update(employee);
   }
 
+  partialEdit(id: string, obj: any): Promise<void> {
+    return this.db.collection(this.employeeCollectionName).doc(id).update(obj);
+  }
+
+  delete(id: string): Promise<void> {
+    return this.db.collection(this.employeeCollectionName).doc(id).delete();
+  }
+
   setEmployee(id: string, data: firebase.firestore.DocumentData): Employee {
     const obj: Employee = {
       id,
@@ -38,7 +46,9 @@ export class EmployeesService {
       address: data.address,
       dateOfBirth: data.dateOfBirth.toDate(),
       grafipapelId: data.grafipapelId,
-      canEnter: data.canEnter
+      canEnter: data.canEnter,
+      employeeType: data.employeeType,
+      statusType: data.statusType
     };
     return obj;
   }

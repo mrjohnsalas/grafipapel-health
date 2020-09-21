@@ -17,9 +17,9 @@ export class UserQuizzesService {
   }
 
   getByEmployeeIdAndToday(employeeId: string): Observable<firebase.firestore.QuerySnapshot> {
-    let tempDate = new Date();
-    let today = new Date(tempDate.getFullYear() + '-' + (tempDate.getMonth() + 1) + '-' + tempDate.getDate());
-    let tomorrow = new Date(tempDate.getFullYear() + '-' + (tempDate.getMonth() + 1) + '-' + tempDate.getDate());
+    const tempDate = new Date();
+    const today = new Date(tempDate.getFullYear() + '-' + (tempDate.getMonth() + 1) + '-' + tempDate.getDate());
+    const tomorrow = new Date(tempDate.getFullYear() + '-' + (tempDate.getMonth() + 1) + '-' + tempDate.getDate());
     tomorrow.setDate(tomorrow.getDate() + 1);
     return this.db.collection<UserQuiz>(this.userQuizCollectionName, ref =>
       ref.where('employeeId', '==', employeeId).where('date', '>=', today).where('date', '<', tomorrow)).get();
