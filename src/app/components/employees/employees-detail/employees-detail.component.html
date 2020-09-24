@@ -6,7 +6,84 @@
 </div>
 
 <div class="modal-body">
-    <p>{{ this.employeeSelected.firstName + ' ' + this.employeeSelected.lastName }}</p>
+    <div class="row mb-3">
+        <div class="col-lg-12">
+            <dl class="row mb-0">
+                <div class="col-sm-4 text-sm-right">
+                    <dt>DNI:</dt>
+                </div>
+                <div class="col-sm-8 text-sm-left">
+                    <dd class="mb-1">{{ this.employeeSelected.dni }}</dd>
+                </div>
+            </dl>
+            <dl class="row mb-0">
+                <div class="col-sm-4 text-sm-right">
+                    <dt>Nombre completo:</dt>
+                </div>
+                <div class="col-sm-8 text-sm-left">
+                    <dd class="mb-1">{{ this.employeeSelected.firstName + ' ' + this.employeeSelected.lastName }}</dd>
+                </div>
+            </dl>
+            <dl class="row mb-0">
+                <div class="col-sm-4 text-sm-right">
+                    <dt>Fec. Nacimiento:</dt>
+                </div>
+                <div class="col-sm-8 text-sm-left">
+                    <dd class="mb-1">{{ this.employeeSelected.dateOfBirth | date:'yyyy-MM-dd' }}</dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-lg-12">
+            <dl class="row mb-0">
+                <div class="col-sm-4 text-sm-right">
+                    <dt>Grafipapel Id:</dt>
+                </div>
+                <div class="col-sm-8 text-sm-left">
+                    <dd class="mb-1">{{ this.employeeSelected.grafipapelId }}</dd>
+                </div>
+            </dl>
+            <dl class="row mb-0">
+                <div class="col-sm-4 text-sm-right">
+                    <dt>Tipo de trabajador:</dt>
+                </div>
+                <div class="col-sm-8 text-sm-left">
+                    <dd class="mb-1">{{ this.employeeSelected.employeeType === 1 ? 'Empleado' : 'Obrero' }}</dd>
+                </div>
+            </dl>
+            <dl class="row mb-0">
+                <div class="col-sm-4 text-sm-right">
+                    <dt>¿Puede ingresar?:</dt>
+                </div>
+                <div class="col-sm-8 text-sm-left">
+                    <dd class="mb-1">{{ this.employeeSelected.canEnter ? 'Si' : 'No' }}</dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <dl class="row mb-0">
+                <div class="col-sm-4 text-sm-right">
+                    <dt>Celular:</dt>
+                </div>
+                <div class="col-sm-8 text-sm-left">
+                    <dd class="mb-1">{{ this.employeeSelected.phone }}</dd>
+                </div>
+            </dl>
+            <dl class="row mb-0">
+                <div class="col-sm-4 text-sm-right">
+                    <dt>Dirección:</dt>
+                </div>
+                <div class="col-sm-8 text-sm-left">
+                    <dd class="mb-1">{{ this.employeeSelected.address }}</dd>
+                </div>
+            </dl>
+        </div>
+    </div>
 </div>
 
 <div class="modal-footer">

@@ -14,6 +14,9 @@ import { EmployeesService } from '@services/employees.service';
 export class EmployeesListComponent implements OnInit {
 
   employees: Employee[] = [];
+  employeesFiltered: Employee[] = [];
+  isLoadingData = false;
+  searchText = '';
   dtOptions: any = {
     info: true,
     lengthChange: false,
@@ -81,7 +84,7 @@ export class EmployeesListComponent implements OnInit {
   }
 
   view(employee: Employee): void {
-    const modalForm = this.modalService.open(EmployeesDetailComponent);
+    const modalForm = this.modalService.open(EmployeesDetailComponent, { size: 'lg' });
     modalForm.result.then(
       this.onCloseModalForm.bind(this),
       this.onCloseModalForm.bind(this)
@@ -112,13 +115,37 @@ export class EmployeesListComponent implements OnInit {
   }
 
   loadEmployees(): void {
-    this.employeesService.getAll().subscribe(collection => {
-      this.employees = [];
-      collection.docs.forEach(doc => {
-        const employee = this.employeesService.setEmployee(doc.id, doc.data());
-        this.employees.push(employee);
+    this.isLoadingData = true;
+    this.employeesService.getAll().subscribe(
+      collection => {
+        this.employees = [];
+        collection.docs.forEach(doc => {
+          const employee = this.employeesService.setEmployee(doc.id, doc.data());
+          this.employees.push(employee);
+        });
+      },
+      error => {
+        console.error(error);
+      },
+      () => {
+        this.isLoadingData = false;
+        this.filterData();
       });
-    });
+  }
+
+  filterData(): void {
+    if (this.searchText) {
+      const searchTextUpper = this.searchText.toUpperCase();
+      this.employeesFiltered = this.employees.filter(obj =>
+        obj.dni.includes(searchTextUpper)
+        || obj.firstName.toUpperCase().includes(searchTextUpper)
+        || obj.lastName.toUpperCase().includes(searchTextUpper));
+    } else {
+      this.employeesFiltered = this.employees;
+    }
+    if (this.isLoadingData) {
+      this.isLoadingData = false;
+    }
   }
 
 }

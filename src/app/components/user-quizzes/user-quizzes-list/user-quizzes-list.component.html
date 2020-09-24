@@ -11,13 +11,11 @@
             <div class="form-group">
     
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Buscar" #searchText>
+                    <input type="text" class="form-control" placeholder="Buscar" [(ngModel)]="this.searchText">
                     <span class="input-group-append">
                         <div class="btn-group">
-                            <button type="button" class="btn btn-primary" (click)="loadUserQuizzes(searchDatex.value)" [disabled]="isLoadingData"
-                                title="Buscar"><i class="fa fa-search"></i></button>
-                            <button type="button" class="btn btn-success" (click)="loadUserQuizzes()" [disabled]="isLoadingData"
-                                title="Refrescar"><i class="fa fa-refresh"></i></button>
+                            <button type="button" class="btn btn-primary" (click)="loadUserQuizzes(searchDatex.value)" [disabled]="isLoadingData" title="Buscar"><i class="fa fa-search"></i></button>
+                            <button type="button" class="btn btn-success" (click)="loadUserQuizzes(searchDatex.value)" [disabled]="isLoadingData" title="Refrescar"><i class="fa fa-refresh"></i></button>
                         </div>
                     </span>
                 </div>
@@ -26,7 +24,7 @@
         </div>
     </div>
 
-    <table class="table table-sm row-border table-hover" datatable [dtOptions]="dtOptions" *ngIf="this.userQuizzes && this.userQuizzes.length > 0" style="width: 100%;">
+    <table class="table table-sm row-border table-hover" datatable [dtOptions]="dtOptions" style="width: 100%;" id="tblData" *ngIf="this.userQuizzesFiltered && this.userQuizzesFiltered.length > 0">
         <thead>
             <tr>
                 <th class="text-center">Fecha</th>
@@ -35,9 +33,9 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let userQuiz of this.userQuizzes, let index = index">
+            <tr *ngFor="let userQuiz of this.userQuizzesFiltered, let index = index">
                 <td>{{ userQuiz.date | date:'yyyy-MM-dd hh:mm a' }}</td>
-                <td>{{ userQuiz.employeeId }}</td>
+                <td>{{ userQuiz.employee.firstName + ' ' + userQuiz.employee.lastName }}</td>
                 <td class="text-center">
                     <div class="btn-group" role="group" aria-label="Basic example">
                         <button type="button" class="btn btn-default btn-sm" (click)="view(userQuiz)"><i class="fa fa-file-o" aria-hidden="true"></i></button>

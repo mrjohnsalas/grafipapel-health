@@ -4,6 +4,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AppSettingsService } from '@services/app-settings.service';
 import { UserQuizzesService } from '@services/user-quizzes.service';
 import { UserQuizzesDetailComponent } from '@components/user-quizzes/user-quizzes-detail/user-quizzes-detail.component';
+import { Employee } from '@models/employee';
+import { EmployeesService } from '@services/employees.service';
 
 @Component({
   selector: 'app-user-quizzes-list',
@@ -13,7 +15,10 @@ import { UserQuizzesDetailComponent } from '@components/user-quizzes/user-quizze
 export class UserQuizzesListComponent implements OnInit {
 
   userQuizzes: UserQuiz[] = [];
+  userQuizzesFiltered: UserQuiz[] = [];
   isLoadingData = false;
+  searchText = '';
+  employees: Employee[] = [];
   dtOptions: any = {
     info: true,
     lengthChange: false,
@@ -56,19 +61,19 @@ export class UserQuizzesListComponent implements OnInit {
     ]
   };
 
-  constructor(private modalService: NgbModal, public appSettingsService: AppSettingsService, private userQuizzesService: UserQuizzesService) { }
+  constructor(private modalService: NgbModal, public appSettingsService: AppSettingsService, private userQuizzesService: UserQuizzesService, private employeesService: EmployeesService) { }
 
   ngOnInit(): void {
     this.loadUserQuizzes();
   }
 
   view(userQuiz: UserQuiz): void {
-    const modalForm = this.modalService.open(UserQuizzesDetailComponent);
+    const modalForm = this.modalService.open(UserQuizzesDetailComponent, { size: 'lg' });
     modalForm.result.then(
       this.onCloseModalForm.bind(this),
       this.onCloseModalForm.bind(this)
     );
-    modalForm.componentInstance.employeeSelected = userQuiz;
+    modalForm.componentInstance.userQuizSelected = userQuiz;
   }
 
   delete(id: string, index: number): void {
@@ -95,6 +100,15 @@ export class UserQuizzesListComponent implements OnInit {
 
   loadUserQuizzes(date?: string): void {
     this.isLoadingData = true;
+    if (this.employees === undefined || this.employees.length === 0) {
+      this.employeesService.getAll().subscribe(collection => {
+        this.employees = [];
+        collection.docs.forEach(doc => {
+          const employee = this.employeesService.setEmployee(doc.id, doc.data());
+          this.employees.push(employee);
+        });
+      });
+    }
     let dateX = new Date();
     if (date !== undefined) {
       const dateArray = date.split('-');
@@ -105,6 +119,7 @@ export class UserQuizzesListComponent implements OnInit {
         this.userQuizzes = [];
         collection.docs.forEach(doc => {
           const userQuiz = this.userQuizzesService.setUserQuiz(doc.id, doc.data());
+          userQuiz.employee = this.employees.find(x => x.id === userQuiz.employeeId);
           this.userQuizzes.push(userQuiz);
         });
       },
@@ -113,7 +128,23 @@ export class UserQuizzesListComponent implements OnInit {
       },
       () => {
         this.isLoadingData = false;
+        this.filterData();
       });
+  }
+
+  filterData(): void {
+    if (this.searchText) {
+      const searchTextUpper = this.searchText.toUpperCase();
+      this.userQuizzesFiltered = this.userQuizzes.filter(obj =>
+        obj.date.toDateString().includes(searchTextUpper)
+        || obj.employee?.firstName.toUpperCase().includes(searchTextUpper)
+        || obj.employee?.lastName.toUpperCase().includes(searchTextUpper));
+    } else {
+      this.userQuizzesFiltered = this.userQuizzes;
+    }
+    if (this.isLoadingData) {
+      this.isLoadingData = false;
+    }
   }
 
 }
