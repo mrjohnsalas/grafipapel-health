@@ -1,4 +1,2 @@
-<div class="container">
-  <!-- <router-outlet></router-outlet> -->
-  <app-employees-list></app-employees-list>
-</div>
+<app-menu *ngIf="router.isActive('home', true) || router.isActive('employees', true) || router.isActive('userquizzes', true)"></app-menu>
+<router-outlet></router-outlet>

@@ -1,0 +1,16 @@
+<div class="container container-mobile">
+    <!-- ERRORS -->
+    <div class="alert alert-danger mt-2" role="alert" *ngIf="this.withError">
+        {{ this.errorMessage }}
+    </div>
+
+    <!-- LOGIN -->
+    <div class="login">
+        <p class="login-title">Grafipapel S.A.</p>
+        <img src="./assets/images/heart-with-mask-3.svg" alt="" class="heart">
+        <p class="login-subTitle">Bienvenido a <br>Grafipapel Salud</p>
+        <input type="email" class="form-control" placeholder="Correo" #txtEmail>
+        <input type="password" class="form-control" placeholder="Contraseña" #txtPassword>
+        <button class="btn btn-primary btn-principal" (click)="login(txtEmail.value, txtPassword.value)" [disabled]="this.isLoadingData">Ingresar</button>
+    </div>
+</div>

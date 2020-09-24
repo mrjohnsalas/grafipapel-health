@@ -16,6 +16,17 @@ export class UserQuizzesService {
     return this.db.collection<UserQuiz>(this.userQuizCollectionName).get();
   }
 
+  getByDate(date?: Date): Observable<firebase.firestore.QuerySnapshot> {
+    if (date === undefined) {
+      date = new Date();
+    }
+    const today = new Date(date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate());
+    const tomorrow = new Date(date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate());
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    return this.db.collection<UserQuiz>(this.userQuizCollectionName, ref =>
+      ref.where('date', '>=', today).where('date', '<', tomorrow)).get();
+  }
+
   getByEmployeeIdAndToday(employeeId: string): Observable<firebase.firestore.QuerySnapshot> {
     const tempDate = new Date();
     const today = new Date(tempDate.getFullYear() + '-' + (tempDate.getMonth() + 1) + '-' + tempDate.getDate());
@@ -27,6 +38,10 @@ export class UserQuizzesService {
 
   create(userQuiz: UserQuiz): Promise<DocumentReference> {
     return this.db.collection(this.userQuizCollectionName).add({...userQuiz});
+  }
+
+  delete(id: string): Promise<void> {
+    return this.db.collection(this.userQuizCollectionName).doc(id).delete();
   }
 
   setUserQuiz(id: string, data: firebase.firestore.DocumentData): UserQuiz {

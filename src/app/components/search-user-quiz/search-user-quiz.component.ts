@@ -1,17 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { UserQuizzesService } from '@services/user-quizzes.service';
-import { UserQuiz } from '@models/user-quiz';
 import { Employee } from '@models/employee';
-import { EmployeesService } from '@services/employees.service';
-import { AppSettingsService } from '@services/app-settings.service';
 import { QuizStep } from '@models/quiz-step';
+import { UserQuiz } from '@models/user-quiz';
+
+import { AppSettingsService } from '@services/app-settings.service';
+import { EmployeesService } from '@services/employees.service';
+import { UserQuizzesService } from '@services/user-quizzes.service';
 
 @Component({
-  selector: 'app-user-quizzes-search',
-  templateUrl: './user-quizzes-search.component.html',
-  styleUrls: ['./user-quizzes-search.component.css']
+  selector: 'app-search-user-quiz',
+  templateUrl: './search-user-quiz.component.html',
+  styleUrls: ['./search-user-quiz.component.css']
 })
-export class UserQuizzesSearchComponent implements OnInit {
+export class SearchUserQuizComponent implements OnInit {
 
   userQuiz: UserQuiz;
   withError = false;

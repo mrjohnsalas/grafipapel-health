@@ -1,22 +1,24 @@
 import { Component, OnInit } from '@angular/core';
-import { Quiz } from '@models/quiz';
+
+import { AppSettingsService } from '@services/app-settings.service';
+import { EmployeesService } from '@services/employees.service';
+import { QuizzesService } from '@services/quizzes.service';
+import { UserQuizzesService } from '@services/user-quizzes.service';
+
+import { Employee } from '@models/employee';
 import { Pager } from '@models/pager';
 import { Question } from '@models/question';
 import { Option } from '@models/option';
-import { UserQuiz } from '@models/user-quiz';
-import { Employee } from '@models/employee';
-import { QuizzesService } from '@services/quizzes.service';
-import { EmployeesService } from '@services/employees.service';
-import { UserQuizzesService } from '@services/user-quizzes.service';
+import { Quiz } from '@models/quiz';
 import { QuizStep } from '@models/quiz-step';
-import { AppSettingsService } from '@services/app-settings.service';
+import { UserQuiz } from '@models/user-quiz';
 
 @Component({
-  selector: 'app-user-quizzes-form',
-  templateUrl: './user-quizzes-form.component.html',
-  styleUrls: ['./user-quizzes-form.component.css']
+  selector: 'app-register-user-quiz',
+  templateUrl: './register-user-quiz.component.html',
+  styleUrls: ['./register-user-quiz.component.css']
 })
-export class UserQuizzesFormComponent implements OnInit {
+export class RegisterUserQuizComponent implements OnInit {
 
   quiz: Quiz;
   pager = new Pager(0, 1, 1);

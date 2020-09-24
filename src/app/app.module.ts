@@ -7,21 +7,26 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+
 import { AngularFireModule } from '@angular/fire';
+import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { environment } from '../environments/environment';
-import { EmployeesListComponent } from './components/employees/employees-list/employees-list.component';
-import { EmployeesFormComponent } from './components/employees/employees-form/employees-form.component';
-import { EmployeesDetailComponent } from './components/employees/employees-detail/employees-detail.component';
-import { EmployeesComponent } from './components/employees/employees.component';
+
+import { HomeComponent } from '@components/home/home.component';
+import { LoginComponent } from '@components/login/login.component';
+import { RegisterUserQuizComponent } from '@components/register-user-quiz/register-user-quiz.component';
+import { SearchUserQuizComponent } from '@components/search-user-quiz/search-user-quiz.component';
+import { MenuComponent } from './components/menu/menu.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    EmployeesListComponent,
-    EmployeesFormComponent,
-    EmployeesDetailComponent,
-    EmployeesComponent
+    HomeComponent,
+    LoginComponent,
+    RegisterUserQuizComponent,
+    SearchUserQuizComponent,
+    MenuComponent
   ],
   imports: [
     BrowserModule,
@@ -32,10 +37,10 @@ import { EmployeesComponent } from './components/employees/employees.component';
     NgbModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    AngularFireAuthModule
   ],
   providers: [],
-  bootstrap: [AppComponent],
-  entryComponents: [EmployeesFormComponent, EmployeesDetailComponent]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

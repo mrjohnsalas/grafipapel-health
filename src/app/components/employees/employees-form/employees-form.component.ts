@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StatusType } from '@models/status-type';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { AppSettingsService } from '@services/app-settings.service';
 import { EmployeesService } from '@services/employees.service';
-import { Employee } from '../../../_models/employee';
+import { Employee } from '@models/employee';
 import { DocumentReference } from '@angular/fire/firestore';
 
 @Component({
@@ -31,6 +31,7 @@ export class EmployeesFormComponent implements OnInit {
   get dni(): AbstractControl {
     return this.form.get('dni');
   }
+
   get grafipapelId(): AbstractControl {
     return this.form.get('grafipapelId');
   }

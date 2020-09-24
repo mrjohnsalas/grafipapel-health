@@ -1,0 +1,25 @@
+<div class="container container-mobile">
+    <!-- ERRORS -->
+    <div class="alert alert-danger mt-2" role="alert" *ngIf="this.withError">
+        {{ this.errorMessage }}
+    </div>
+
+    <!-- QUIZ-INIT -->
+    <div class="quiz-init" *ngIf="this.quizStep == this.appSettingsService.quizStep.Init">
+        <p class="quiz-init-gp">Grafipapel S.A.</p>
+        <img src="./assets/images/heart-with-mask-3.svg" alt="" class="heart">
+        <p class="quiz-init-title">Bienvenido a la consulta del registro de la <br>Ficha de sintomatología</p>
+        <input type="number" class="form-control quiz-init-search" placeholder="DNI" #txtDni>
+        <button class="btn btn-primary btn-principal" (click)="checkEmployee(txtDni.value)" [disabled]="this.isLoadingData">Consultar</button>
+    </div>
+
+    <!-- QUIZ-END -->
+    <div class="quiz-end" *ngIf="this.quizStep === this.appSettingsService.quizStep.End">
+        <p class="quiz-end-title">Grafipapel S.A.</p>
+        <img src="./assets/images/heart-with-mask-3.svg" alt="" class="heart">
+        <p class="quiz-end-healt" *ngIf="this.employee.canEnter">El trabajador: {{ this.employee.firstName + ' ' + this.employee.lastName }},<br> PUEDE INGRESAR</p>
+        <p class="quiz-end-healt" *ngIf="!this.employee.canEnter">El trabajador: {{ this.employee.firstName + ' ' + this.employee.lastName }},<br> <span>NO PUEDE INGRESAR</span><br> debe comunicarse con Recursos Humanos al siguiente
+            número telefónico: <a href="tel:+51998111273">998 111 273</a>.</p>
+        <button class="btn btn-primary btn-principal" (click)="restart()">Salir</button>
+    </div>
+</div>

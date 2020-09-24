@@ -21,16 +21,83 @@ body {
     color: var(--color-white);
 }
 
-.container {
+.container-mobile {
     max-width: 650px;
 }
 
-.btn {
+.btn-principal {
     font-weight: 900;
     font-size: 15px;
     border-radius: 30px;
     padding: 10px 40px;
     margin: 20px auto;
+}
+
+/* DATATABLE */
+
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+    background-color: var(--color-white);
+}
+
+.dataTable thead {
+    color: var(--color-white);
+}
+
+.dataTable tbody, .dataTable button {
+    color: var(--color-gray);
+}
+
+.html5buttons {
+    float: right;
+}
+
+.dataTables_info {
+    font-size: 12px;
+}
+  
+/* .html5buttons button {
+  border: 1px solid #e7eaec;
+  background: #fff;
+  color: #676a6c;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  padding: 6px 8px;
+  font-size: 10px;
+}
+  
+.html5buttons button:hover, .html5buttons button:focus:active {
+  background-color: #eee;
+  color: inherit;
+  border-color: #d2d2d2;
+} */
+
+/* MENU */
+nav {
+    background-color: inherit;
+}
+
+.nav-link-text {
+    font-size: 16px;
+    margin-left: 10px;
+}
+
+.navbar-toggler {
+    border-color: var(--color-gray);
+    color: var(--color-gray);
+    font-size: 25px;
+} 
+
+.nav-link {
+    color: var(--color-gray);
+    font-size: 20px;
+}
+
+.nav-link:hover {
+    color: var(--color-white);
+}
+
+.nav-item.active .nav-link {
+    color: var(--color-white);
 }
 
 /* HEART LOGO */
@@ -97,6 +164,42 @@ body {
     opacity: 1;
 }
 
+/* LOGIN */
+
+.login {
+    text-align: center;
+    color: var(--color-white);
+    font-size: 30px;
+}
+
+.login-title {
+    margin-top: 120px;
+    margin-bottom: 10px;
+}
+
+.login-subTitle {
+    font-size: 20px;
+    margin-top: 30px;
+    color: var(--color-gray);
+}
+
+.login input {
+    border-radius: 20px;
+    margin: 40px auto;
+    padding: 10px;
+    width: 70%;
+    border: 2px solid var(--color-strongGreen);
+}
+
+.login input:nth-of-type(1n) {
+     margin-bottom: 0px;
+}
+
+.login input:nth-of-type(2n) {
+    margin-top: 15px;
+    margin-bottom: 25px;
+}
+
 /* QUIZ-INIT */
 
 .quiz-init {
@@ -131,23 +234,28 @@ body {
     color: var(--color-white);
     font-size: 30px;
 }
+
 .quiz-end-title {
     margin-top: 20px;
     margin-bottom: 10px;
 }
+
 .quiz-end-healt {
     font-size: 20px;
     margin-top: 30px;
     color: var(--color-white);
 }
+
 .quiz-end-healt span, a {
     color: var(--color-red);
     text-decoration: none;
 }
+
 .quiz-end-healt a:hover {
     color: var(--color-red);
     text-decoration: none;
 }
+
 .quiz-end-comment {
     font-size: 14px;
     margin-top: 30px;

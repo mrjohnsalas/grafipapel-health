@@ -1,24 +1,33 @@
-<button class="btn btn-primary" (click)="addEmployee()">Agregar trabajador</button>
+<div class="container">
 
-<table class="table table-striped" *ngIf="this.employees && this.employees.length > 0">
-    <thead>
-        <tr>
-            <th>Dni</th>
-            <th>Nombre completo</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let employee of this.employees, let index = index">
-            <td>{{ employee.dni }}</td>
-            <td>{{ employee.firstName + ' ' + employee.lastName }}</td>
-            <td>
-                <div class="btn-group" role="group" aria-label="Basic example">
-                    <button type="button" class="btn btn-default btn-sm" (click)="view(employee)"><i class="fa fa-file-o" aria-hidden="true"></i></button>
-                    <button type="button" class="btn btn-default btn-sm" (click)="edit(employee)"><i class="fa fa-pencil" aria-hidden="true"></i></button>
-                    <button type="button" class="btn btn-default btn-sm" (click)="delete(employee.id, index)"><i class="fa fa-trash" aria-hidden="true"></i></button>
-                  </div>
-            </td>
-        </tr>
-    </tbody>
-</table>
+    <div class="input-group mb-3 mt-3">
+        <input type="text" class="form-control" placeholder="Buscar" aria-label="Buscar" aria-describedby="basic-addon2">
+        <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="button"><i class="fa fa-search" aria-hidden="true"></i></button>
+        </div>
+    </div>
+
+    <button class="btn btn-primary float-right btn-sm" (click)="add()"><i class="fa fa-plus" aria-hidden="true"></i></button>
+    <table class="table table-sm row-border table-hover" datatable [dtOptions]="dtOptions" *ngIf="this.employees && this.employees.length > 0" style="width: 100%;">
+        <thead>
+            <tr>
+                <th class="text-center">Dni</th>
+                <th class="text-center">Nombre completo</th>
+                <th class="text-center"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let employee of this.employees, let index = index">
+                <td>{{ employee.dni }}</td>
+                <td>{{ employee.firstName + ' ' + employee.lastName }}</td>
+                <td class="text-center">
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <button type="button" class="btn btn-default btn-sm" (click)="view(employee)"><i class="fa fa-file-o" aria-hidden="true"></i></button>
+                        <button type="button" class="btn btn-default btn-sm" (click)="edit(employee)"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+                        <button type="button" class="btn btn-default btn-sm" (click)="delete(employee.id, index)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
