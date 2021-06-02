@@ -15,6 +15,12 @@
             <li class="nav-item" [ngClass]="{'active': router.isActive('userquizzes', true)}">
                 <a class="nav-link" routerLink="userquizzes"><i class="fa fa-file-text" aria-hidden="true"></i> <span class="nav-link-text">Registros</span></a>
             </li>
+            <li class="nav-item" [ngClass]="{'active': router.isActive('userquizzes', true)}">
+                <a class="nav-link" routerLink="registeruserquiz"><i class="fa fa-pencil" aria-hidden="true"></i> <span class="nav-link-text">Registrar</span></a>
+            </li>
+            <li class="nav-item" [ngClass]="{'active': router.isActive('userquizzes', true)}">
+                <a class="nav-link" routerLink="searchuserquiz"><i class="fa fa-search" aria-hidden="true"></i> <span class="nav-link-text">Buscar</span></a>
+            </li>
         </ul>
         <!-- <span class="navbar-text">
             John Salas

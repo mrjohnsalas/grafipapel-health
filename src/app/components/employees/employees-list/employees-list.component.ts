@@ -1,22 +1,29 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { EmployeesFormComponent } from '../employees-form/employees-form.component';
 import { Employee } from '@models/employee';
 import { EmployeesDetailComponent } from '../employees-detail/employees-detail.component';
 import { AppSettingsService } from '@services/app-settings.service';
 import { EmployeesService } from '@services/employees.service';
+import { Subject } from 'rxjs';
+import { DataTableDirective } from 'angular-datatables';
 
 @Component({
   selector: 'app-employees-list',
   templateUrl: './employees-list.component.html',
   styleUrls: ['./employees-list.component.css']
 })
-export class EmployeesListComponent implements OnInit {
+export class EmployeesListComponent implements OnInit, OnDestroy {
+
+  @ViewChild(DataTableDirective, { static: false })
+  dtElement: DataTableDirective;
 
   employees: Employee[] = [];
   employeesFiltered: Employee[] = [];
   isLoadingData = false;
   searchText = '';
+
+  dtTrigger = new Subject();
   dtOptions: any = {
     info: true,
     lengthChange: false,
@@ -55,12 +62,17 @@ export class EmployeesListComponent implements OnInit {
     columnDefs: [
       { targets: 0, responsivePriority: 10001 },
       { targets: 1, responsivePriority: 1 },
-      { targets: 2, orderable: false, responsivePriority: 2 }
+      { targets: 2, responsivePriority: 3 },
+      { targets: 3, orderable: false, responsivePriority: 2 }
     ]
   };
 
   constructor(private modalService: NgbModal, public appSettingsService: AppSettingsService, private employeesService: EmployeesService) { }
 
+  ngOnDestroy(): void {
+    this.dtTrigger.unsubscribe();
+  }
+  
   ngOnInit(): void {
     this.loadEmployees();
   }
@@ -146,6 +158,19 @@ export class EmployeesListComponent implements OnInit {
     if (this.isLoadingData) {
       this.isLoadingData = false;
     }
+    this.dtRender();
+  }
+
+  dtRender() {
+    if("dtInstance" in this.dtElement){
+      this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+        dtInstance.destroy();
+        this.dtTrigger.next();
+      });
+    }
+    else{
+      this.dtTrigger.next();
+    } 
   }
 
 }

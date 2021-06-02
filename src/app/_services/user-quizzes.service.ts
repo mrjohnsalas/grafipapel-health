@@ -32,6 +32,10 @@ export class UserQuizzesService {
     const today = new Date(tempDate.getFullYear() + '-' + (tempDate.getMonth() + 1) + '-' + tempDate.getDate());
     const tomorrow = new Date(tempDate.getFullYear() + '-' + (tempDate.getMonth() + 1) + '-' + tempDate.getDate());
     tomorrow.setDate(tomorrow.getDate() + 1);
+    console.log('today');
+    console.log(today);
+    console.log('tomorrow');
+    console.log(tomorrow);
     return this.db.collection<UserQuiz>(this.userQuizCollectionName, ref =>
       ref.where('employeeId', '==', employeeId).where('date', '>=', today).where('date', '<', tomorrow)).get();
   }

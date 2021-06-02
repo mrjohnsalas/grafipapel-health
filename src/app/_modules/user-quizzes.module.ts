@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DataTablesModule } from 'angular-datatables';
 
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 import { UserQuizzesRoutingModule } from './user-quizzes-routing.module';
 import { UserQuizzesService } from '@services/user-quizzes.service';
 
@@ -21,6 +23,7 @@ import { UserQuizzesDetailComponent } from '@components/user-quizzes/user-quizze
     UserQuizzesRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    NgbModule,
     DataTablesModule
   ],
   providers: [

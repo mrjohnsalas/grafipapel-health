@@ -1,24 +1,35 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { NgbModal, NgbCalendar, NgbDate } from '@ng-bootstrap/ng-bootstrap';
+
 import { UserQuiz } from '@models/user-quiz';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AppSettingsService } from '@services/app-settings.service';
 import { UserQuizzesService } from '@services/user-quizzes.service';
 import { UserQuizzesDetailComponent } from '@components/user-quizzes/user-quizzes-detail/user-quizzes-detail.component';
 import { Employee } from '@models/employee';
 import { EmployeesService } from '@services/employees.service';
+import { Subject } from 'rxjs';
+import { DataTableDirective } from 'angular-datatables';
 
 @Component({
   selector: 'app-user-quizzes-list',
   templateUrl: './user-quizzes-list.component.html',
   styleUrls: ['./user-quizzes-list.component.css']
 })
-export class UserQuizzesListComponent implements OnInit {
+export class UserQuizzesListComponent implements OnInit, OnDestroy {
+
+  @ViewChild(DataTableDirective, { static: false })
+  dtElement: DataTableDirective;
 
   userQuizzes: UserQuiz[] = [];
   userQuizzesFiltered: UserQuiz[] = [];
   isLoadingData = false;
   searchText = '';
   employees: Employee[] = [];
+
+  lastSelectedDate: NgbDate;
+  selectedDate: NgbDate;
+
+  dtTrigger = new Subject();
   dtOptions: any = {
     info: true,
     lengthChange: false,
@@ -61,10 +72,40 @@ export class UserQuizzesListComponent implements OnInit {
     ]
   };
 
-  constructor(private modalService: NgbModal, public appSettingsService: AppSettingsService, private userQuizzesService: UserQuizzesService, private employeesService: EmployeesService) { }
+  constructor(private modalService: NgbModal, private calendarService: NgbCalendar, public appSettingsService: AppSettingsService, private userQuizzesService: UserQuizzesService, private employeesService: EmployeesService) { }
+
+  ngOnDestroy(): void {
+    this.dtTrigger.unsubscribe();
+  }
 
   ngOnInit(): void {
-    this.loadUserQuizzes();
+
+    this.selectToday();
+
+    this.isLoadingData = true;
+    if (this.employees === undefined || this.employees.length === 0) {
+
+      this.employeesService.getAll().subscribe(
+        collection => {
+          this.employees = [];
+          collection.docs.forEach(doc => {
+            const employee = this.employeesService.setEmployee(doc.id, doc.data());
+            this.employees.push(employee);
+          });
+        },
+        error => {
+          console.error(error);
+        },
+        () => {
+          this.getUserQuizzes();
+        }
+      );
+
+    }
+  }
+
+  selectToday() {
+    this.selectedDate = this.calendarService.getToday();
   }
 
   view(userQuiz: UserQuiz): void {
@@ -98,23 +139,28 @@ export class UserQuizzesListComponent implements OnInit {
     }
   }
 
-  loadUserQuizzes(date?: string): void {
+  toDate(year: number, month: number, day: number): Date {
+    return new Date(year, month, day);
+  }
+
+  isEqualDate(date1: NgbDate, date2: NgbDate): boolean {
+    return (date1.year === date2.year && date1.month === date2.month && date1.day === date2.day);
+  }
+
+  getUserQuizzes(forceLoad: boolean = false): void {
+    if(this.lastSelectedDate && this.isEqualDate(this.selectedDate, this.lastSelectedDate) && !forceLoad){
+      this.filterData();
+    } else {
+      this.lastSelectedDate = this.selectedDate;
+      this.loadUserQuizzes(this.toDate(this.selectedDate.year, this.selectedDate.month - 1, this.selectedDate.day));
+    }
+  }
+
+  loadUserQuizzes(date: Date): void {
+
     this.isLoadingData = true;
-    if (this.employees === undefined || this.employees.length === 0) {
-      this.employeesService.getAll().subscribe(collection => {
-        this.employees = [];
-        collection.docs.forEach(doc => {
-          const employee = this.employeesService.setEmployee(doc.id, doc.data());
-          this.employees.push(employee);
-        });
-      });
-    }
-    let dateX = new Date();
-    if (date !== undefined) {
-      const dateArray = date.split('-');
-      dateX = new Date(`${dateArray[1]}/${dateArray[2]}/${dateArray[0]}`);
-    }
-    this.userQuizzesService.getByDate(dateX).subscribe(
+
+    this.userQuizzesService.getByDate(date).subscribe(
       collection => {
         this.userQuizzes = [];
         collection.docs.forEach(doc => {
@@ -136,8 +182,7 @@ export class UserQuizzesListComponent implements OnInit {
     if (this.searchText) {
       const searchTextUpper = this.searchText.toUpperCase();
       this.userQuizzesFiltered = this.userQuizzes.filter(obj =>
-        obj.date.toDateString().includes(searchTextUpper)
-        || obj.employee?.firstName.toUpperCase().includes(searchTextUpper)
+        obj.employee?.firstName.toUpperCase().includes(searchTextUpper)
         || obj.employee?.lastName.toUpperCase().includes(searchTextUpper));
     } else {
       this.userQuizzesFiltered = this.userQuizzes;
@@ -145,6 +190,19 @@ export class UserQuizzesListComponent implements OnInit {
     if (this.isLoadingData) {
       this.isLoadingData = false;
     }
+    this.dtRender();
+  }
+
+  dtRender() {
+    if("dtInstance" in this.dtElement){
+      this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+        dtInstance.destroy();
+        this.dtTrigger.next();
+      });
+    }
+    else{
+      this.dtTrigger.next();
+    } 
   }
 
 }

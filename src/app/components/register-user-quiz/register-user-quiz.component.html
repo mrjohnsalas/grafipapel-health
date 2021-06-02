@@ -46,7 +46,7 @@
             </section>
             <section class="quiz-app-controls">
                 <button class="btn btn-primary btn-principal" (click)="goTo(this.pager.index + 1)" [disabled]="!this.selectedOption" *ngIf="(this.pager.index + 1) !== this.pager.count">Siguiente</button>
-                <button class="btn btn-primary btn-principal" (click)="onSubmit()" [disabled]="!this.selectedOption" *ngIf="(this.pager.index + 1) === this.pager.count">Terminar</button>
+                <button class="btn btn-primary btn-principal" (click)="onSubmit()" [disabled]="!this.selectedOption || isLoadingData" *ngIf="(this.pager.index + 1) === this.pager.count">Terminar</button>
             </section>
         </section>
     </div>

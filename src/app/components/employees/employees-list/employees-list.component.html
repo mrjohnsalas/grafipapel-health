@@ -13,11 +13,12 @@
     </div>
 
     <button class="btn btn-primary float-right btn-sm" (click)="add()"><i class="fa fa-plus" aria-hidden="true"></i></button>
-    <table class="table table-sm row-border table-hover" datatable [dtOptions]="dtOptions" style="width: 100%;" *ngIf="this.employeesFiltered && this.employeesFiltered.length > 0">
+    <table class="table table-sm row-border table-hover" datatable [dtOptions]="dtOptions" [dtTrigger] = "dtTrigger" style="width: 100%;">
         <thead>
             <tr>
                 <th class="text-center">Dni</th>
                 <th class="text-center">Nombre completo</th>
+                <th class="text-center">¿Puede ingresar?</th>
                 <th class="text-center"></th>
             </tr>
         </thead>
@@ -25,6 +26,7 @@
             <tr *ngFor="let employee of this.employeesFiltered, let index = index">
                 <td>{{ employee.dni }}</td>
                 <td>{{ employee.firstName + ' ' + employee.lastName }}</td>
+                <td class="text-center">{{ employee.canEnter ? 'Si' : 'No' }}</td>
                 <td class="text-center">
                     <div class="btn-group" role="group" aria-label="Basic example">
                         <button type="button" class="btn btn-default btn-sm" (click)="view(employee)"><i class="fa fa-file-o" aria-hidden="true"></i></button>

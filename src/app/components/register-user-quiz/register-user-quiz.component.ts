@@ -154,6 +154,7 @@ export class RegisterUserQuizComponent implements OnInit {
   }
 
   onSubmit(): void {
+    this.isLoadingData = true;
     const userQuiz = new UserQuiz();
     userQuiz.date = new Date();
     userQuiz.employeeId = this.employee.id;
@@ -172,7 +173,8 @@ export class RegisterUserQuizComponent implements OnInit {
             .catch(error => console.error(error));
         }
       })
-      .catch(error => console.error(error));
+      .catch(error => console.error(error))
+      .finally( () => this.isLoadingData = false );
   }
 
   getYesCount(userQuiz: UserQuiz): number {
